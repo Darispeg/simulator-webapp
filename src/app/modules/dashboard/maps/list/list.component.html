@@ -1,0 +1,176 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <div class="flex-auto border-t -mt-px pt-4 sm:pt-6">
+        <div class="w-full max-w-screen-xl mx-auto">
+            <!-- Tabs -->
+            <mat-tab-group
+                class="sm:px-2"
+                [animationDuration]="'0'">
+                <!-- Graficos -->
+                <mat-tab label="Graficos">
+                    <ng-template matTabContent>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 w-full min-w-0">
+                            <ng-container *ngIf="maps$ | async as maps">
+                                <ng-container *ngIf="maps.length; else empyt">
+                                    <ng-container *ngFor="let map of maps; let i = index">
+                                        <div class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden">
+                                            <div class="flex items-start justify-between">
+                                                <div class="text-lg font-medium tracking-tight leading-6 truncate">{{map.name}}</div>
+                                                <div class="ml-2 -mt-2 -mr-3">
+                                                    <button
+                                                        mat-icon-button
+                                                        [matMenuTriggerFor]="summaryMenu">
+                                                        <mat-icon
+                                                            class="icon-size-5"
+                                                            [svgIcon]="'heroicons_solid:dots-vertical'"></mat-icon>
+                                                    </button>
+                                                    <mat-menu #summaryMenu="matMenu">
+                                                        <button mat-menu-item>Yesterday</button>
+                                                        <button mat-menu-item>2 days ago</button>
+                                                        <button mat-menu-item>3 days ago</button>
+                                                    </mat-menu>
+                                                </div>
+                                            </div>
+                                            <div class="flex flex-col items-center mt-2">
+                                                <div class="text-7xl sm:text-8xl font-bold tracking-tight leading-none" 
+                                                        [ngClass]="{'text-blue-900': (i) === 0, 'text-blue-400': (i) === 1, 'text-green-700': (i) === 2, 'text-green-400': (i) === 3}"> 
+                                                        {{map.patrols.length}} 
+                                                </div>
+                                                <div class="text-lg font-medium mb-10"
+                                                        [ngClass]="{'text-blue-900': (i) === 0, 'text-blue-400': (i) === 1, 'text-green-700': (i) === 2, 'text-green-400': (i) === 3}">
+                                                        Patrullajes
+                                                </div>
+                                                <button class="fuse-mat-button-rounded hover:bg-blue-300 w-full" mat-flat-button [color]="'accent'" (click)="MapFindByKey(map.mapKey)">
+                                                    <span>Detalles del mapa</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </ng-container>
+                            </ng-container>
+                            <!-- Task distribution -->
+                            <div class="sm:col-span-2 md:col-span-4 lg:col-span-2 flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden">
+                                <div class="flex flex-col sm:flex-row items-start justify-between">
+                                    <div class="text-lg font-medium tracking-tight leading-6 truncate">Distribucion de Patrullajes</div>
+                                </div>
+                                <div class="flex flex-col flex-auto mt-6">
+                                    <apx-chart
+                                        class="flex-auto w-full h-80"
+                                        [chart]="chartTaskDistribution.chart"
+                                        [labels]="chartTaskDistribution.labels"
+                                        [legend]="chartTaskDistribution.legend"
+                                        [plotOptions]="chartTaskDistribution.plotOptions"
+                                        [series]="chartTaskDistribution.series"
+                                        [states]="chartTaskDistribution.states"
+                                        [stroke]="chartTaskDistribution.stroke"
+                                        [colors]="chartPatrolsForMap.colors"
+                                        [tooltip]="chartTaskDistribution.tooltip"
+                                        [yaxis]="chartTaskDistribution.yaxis"></apx-chart>
+                                </div>
+                            </div>
+                            <div class="sm:col-span-2 md:col-span-4 lg:col-span-2 flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden">
+                                <div class="flex flex-col sm:flex-row items-start justify-between">
+                                    <div class="text-lg font-medium tracking-tight leading-6 truncate">Distribucion de Patrullajes</div>
+                                </div>
+                                <div class="flex flex-col flex-auto mt-6">
+                                    <apx-chart
+                                        class="flex-auto w-full h-80"
+                                        [chart]="chartPatrolsForMap.chart"
+                                        [colors]="chartPatrolsForMap.colors"
+                                        [dataLabels]="chartPatrolsForMap.dataLabels"
+                                        [grid]="chartPatrolsForMap.grid"
+                                        [labels]="chartPatrolsForMap.labels"
+                                        [legend]="chartPatrolsForMap.legend"
+                                        [plotOptions]="chartPatrolsForMap.plotOptions"
+                                        [series]="chartPatrolsForMap.series"
+                                        [states]="chartPatrolsForMap.states"
+                                        [stroke]="chartPatrolsForMap.stroke"
+                                        [tooltip]="chartPatrolsForMap.tooltip"
+                                        [xaxis]="chartPatrolsForMap.xaxis"
+                                        [yaxis]="chartPatrolsForMap.yaxis"></apx-chart>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </mat-tab>
+                <mat-tab label="Patrullajes">
+                    <ng-template matTabContent>
+                        <div class="xl:col-span-2 flex flex-col flex-auto bg-card shadow rounded-2xl overflow-hidden">
+                            <div class="p-6">
+                                <div class="mr-4 text-lg font-medium tracking-tight leading-6 truncate">Patrullajes de Reconocimiento</div>
+                                <div class="text-secondary font-medium">Tabla de patrullajes de Reconocimiento</div>
+                            </div>
+                            <div class="overflow-x-auto mx-6">
+                                <table class="w-full bg-transparent" mat-table matSort [dataSource]="patrolsDataSource" 
+                                    [trackBy]="trackByFn" #recognitionsTable #table>
+                                    <ng-container matColumnDef="created">
+                                        <th mat-header-cell mat-sort-header *matHeaderCellDef>Fecha</th>
+                                        <td mat-cell *matCellDef="let patrol">
+                                            <span class="pr-6 font-medium text-sm text-secondary whitespace-nowrap">
+                                                {{patrol.created | date:'MMM dd, y: HH:mm a'}}
+                                            </span>
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="username">
+                                        <th mat-header-cell mat-sort-header *matHeaderCellDef>Usuario</th>
+                                        <td mat-cell *matCellDef="let patrol">
+                                            <span class="pr-6 font-medium text-sm text-secondary whitespace-nowrap">
+                                                {{patrol.username}}
+                                            </span>
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="map">
+                                        <th mat-header-cell mat-sort-header *matHeaderCellDef>Mapa</th>
+                                        <td mat-cell *matCellDef="let patrol">
+                                            <div class="flex items-center">
+                                                <mat-icon class="icon-size-5 text-hint mr-2"
+                                                    [ngClass]="{'text-blue-900': (patrol.map|lowercase) === 'boyuibe', 
+                                                                    'text-blue-400': (patrol.map|lowercase) === 'mancaya',
+                                                                    'text-green-700': (patrol.map|lowercase) === 'pisiga',
+                                                                    'text-green-400': (patrol.map|lowercase) === 'fortin ravelo'}" 
+                                                    [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
+                                                <span class="pr-6 font-medium text-sm text-secondary whitespace-nowrap">
+                                                    {{patrol.map}}
+                                                </span>
+                                            </div>
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="totalSeconds">
+                                        <th mat-header-cell mat-sort-header *matHeaderCellDef>Tiempo de Patrullaje</th>
+                                        <td mat-cell *matCellDef="let patrol">
+                                            <div class="flex items-center">
+                                                <mat-icon class="icon-size-5 text-hint mr-2" [svgIcon]="'heroicons_solid:clock'"></mat-icon>
+                                                <span class="pr-6 font-medium text-sm text-secondary whitespace-nowrap">
+                                                    {{secondsToString(patrol.totalSeconds)}}
+                                                </span>
+                                            </div>
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="qualification">
+                                        <th mat-header-cell mat-sort-header *matHeaderCellDef>Puntaje</th>
+                                        <td mat-cell *matCellDef="let patrol">
+                                            <span class="inline-flex items-center font-bold text-xs px-2.5 py-0.5 rounded-full tracking-wide uppercase"
+                                                [ngClass]="{'bg-red-200 text-red-800 dark:bg-red-600 dark:text-red-50': patrol.qualification < 6, 
+                                                            'bg-green-200 text-green-800 dark:bg-green-600 dark:text-green-50': patrol.qualification >= 6}">
+                                                {{patrol.qualification}}
+                                            </span>
+                                        </td>
+                                    </ng-container>
+                                    
+                                    <!-- Footer -->
+                                    <ng-container matColumnDef="patrolsTableFooter">
+                                        <td class="py-6 px-0 border-0" mat-footer-cell *matFooterCellDef colspan="6">
+                                        </td>
+                                    </ng-container>
+
+                                    <tr mat-header-row *matHeaderRowDef="patrolsTableColumns"></tr>
+                                    <tr class="order-row h-16" mat-row *matRowDef="let row; columns: patrolsTableColumns;"></tr>
+                                    <tr class="h-16 border-0" mat-footer-row *matFooterRowDef="['patrolsTableFooter']"></tr>
+                                </table>
+                            </div>
+                        </div>
+                    </ng-template>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+    </div>
+</div>
