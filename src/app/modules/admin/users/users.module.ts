@@ -21,6 +21,7 @@ import { UsersComponent } from './users.component';
 import { usersRoutes } from './users.routing';
 import { UsersListComponent } from './list/list.component';
 import { UsersDetailsComponent } from './details/details.component';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
     declarations: [
@@ -45,7 +46,8 @@ import { UsersDetailsComponent } from './details/details.component';
         PipesModule,
         SharedModule,
         MatSnackBarModule,
-        MatPaginatorModule
+        MatPaginatorModule,
+        MatExpansionModule
     ],
     providers : [
         { provide: MatPaginatorIntl, useClass: MyCustomPaginatorIntl }

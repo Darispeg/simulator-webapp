@@ -3,30 +3,30 @@ import { Injectable } from "@angular/core";
 import { environment } from "environments/environment";
 import { BehaviorSubject, Observable } from "rxjs";
 import { tap } from "rxjs/operators";
-import { Map } from "./maps.types";
+import { MapSimulator } from "./maps.types";
 
 @Injectable({
     providedIn: 'root'
 })
 export class MapsService {
-    private _map : BehaviorSubject<Map | null> = new BehaviorSubject(null);
-    private _maps : BehaviorSubject<Map[] | null> = new BehaviorSubject(null);
+    private _map : BehaviorSubject<MapSimulator | null> = new BehaviorSubject(null);
+    private _maps : BehaviorSubject<MapSimulator[] | null> = new BehaviorSubject(null);
 
     constructor(private _httpClient: HttpClient){}
 
-    get maps$(): Observable<Map[]>
+    get maps$(): Observable<MapSimulator[]>
     {
         return this._maps.asObservable();
     }
 
-    get map$(): Observable<Map>
+    get map$(): Observable<MapSimulator>
     {
         return this._map.asObservable();
     }
 
-    getMaps(): Observable<Map[]>
+    getMaps(): Observable<MapSimulator[]>
     {
-        return this._httpClient.get<Map[]>(`${environment.APIurl}/maps`)
+        return this._httpClient.get<MapSimulator[]>(`${environment.APIurl}/maps`)
             .pipe(
                 tap((maps) => {
                     this._maps.next(maps);
@@ -34,9 +34,9 @@ export class MapsService {
             )
     }
 
-    getMapByKey(key: string): Observable<Map>
+    getMapByKey(key: string): Observable<MapSimulator>
     {
-        return this._httpClient.get<Map>(`${environment.APIurl}/maps/${key}`)
+        return this._httpClient.get<MapSimulator>(`${environment.APIurl}/maps/${key}`)
             .pipe(
                 tap((map) => {
                     this._map.next(map);

@@ -1,5 +1,5 @@
 export const environment = {
     production: true,
-    APIurl: "https://ticket-sytem-webapi.herokuapp.com/api/v1"
-
+    APIurl: "https://simulator-webapi-production.up.railway.app/api/v1",
+    AuthUrl: "https://simulator-webapi-production.up.railway.app/login"
 };

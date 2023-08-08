@@ -6,29 +6,46 @@ import { ApexOptions } from "ng-apexcharts";
 import { Observable, Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 import { MapsService } from "../maps.service";
-import { Map } from "../maps.types";
+import { MapSimulator } from "../maps.types";
+import { MatPaginator } from "@angular/material/paginator";
+import { Patrol } from "../../patrols/patrols.model";
+import { animate, state, style, transition, trigger } from "@angular/animations";
+import { PatrolService } from "../../patrols/patrols.service";
 
 @Component({
     selector: 'maps-details',
     templateUrl: './details.component.html',
+    styleUrls: ['./details.css'],
+    animations: [
+        trigger('detailExpand', [
+          state('collapsed', style({height: '0px', minHeight: '0'})),
+          state('expanded', style({height: '*'})),
+          transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+        ]),
+    ],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MapsDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
     
     @ViewChild('patrolsTable', {read: MatSort}) patrolsTableMatSort: MatSort;
-    @ViewChild('usersTable', {read: MatSort}) usersTableMatSort: MatSort;
+    @ViewChild(MatPaginator) paginator : MatPaginator;
     
-    map$: Observable<Map>;
-    map: Map;
+    map$: Observable<MapSimulator>;
+    map: MapSimulator;
     patrolsDataSource: MatTableDataSource<any> = new MatTableDataSource();
-    patrolsTableColumns: string[] = ['created', 'username', 'map', 'totalSeconds', 'qualification'];
-    chartUsers: ApexOptions = {};
-    users: string[] = [];
-    userLabel: string[] = []
-    userSeries: number[] = []
-    usersDataSource: MatTableDataSource<any> = new MatTableDataSource();
-    usersTableColumns: string[] = ['username'];
+    patrolsTableColumns: string[] = ['created', 'username', 'map', 'totalSeconds', 'qualification', 'expand'];
+    
+    paramsReport = new Map<string, string>([
+        ["map", "value"],
+        ["order", "desc"],
+        ["column", "created"],
+        ["type", "PDF"]
+    ]);
+
+    // Expandable Row
+    columnsToDisplayWithExpand = [...this.patrolsTableColumns, 'expand'];
+    expandedElement: Patrol | null;     
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
@@ -37,6 +54,7 @@ export class MapsDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
         private _activatedRoute: ActivatedRoute,
         private _router: Router,
         private _changeDetectorRef: ChangeDetectorRef,
+        private _patrolService: PatrolService
     ){}
 
     ngOnInit(): void {
@@ -48,24 +66,11 @@ export class MapsDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.map = map;
                 this.patrolsDataSource.data = map.patrols;
             });
-
-        this.map.patrols.forEach(element => {
-            this.users.push(element.username);
-        });
-
-        this.countUsers(this.users).forEach(element => {
-            this.userLabel.push(element.number1);
-            this.userSeries.push(element.count);
-        });
-
-        this.usersDataSource.data = this.userLabel;
-
-        this._prepareChartData();
     }
 
     ngAfterViewInit(): void {
         this.patrolsDataSource.sort = this.patrolsTableMatSort;
-        this.usersDataSource.sort = this.usersTableMatSort;
+        this.patrolsDataSource.paginator = this.paginator;
     }
 
     ngOnDestroy(): void
@@ -85,6 +90,10 @@ export class MapsDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
         return item.id || index;
     }
 
+    toggleElement(element) {
+        return this.expandedElement === element ? null : element;
+    }
+
     secondsToString(seconds): string {
         let hourNumber = Math.floor(seconds / 3600);
         let hour = (hourNumber < 10)? '0' + hourNumber : hourNumber;
@@ -95,74 +104,43 @@ export class MapsDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
         return hour + ':' + minute + ':' + second;
     }
 
-    countUsers(users: string[]){
-        const specimens = users.filter((number1, i) => i == 0 ? true : users[i - 1] != number1);
-        const counterSpecimens = specimens.map(spec => {
-            return {number1: spec, count: 0};
-        });
-        
-        counterSpecimens.map((countSpec, i) =>{
-            const actualSpecLength = users.filter(number1 => number1 === countSpec.number1).length;
-            countSpec.count = actualSpecLength;
-        })
-        return counterSpecimens;
+    downloadReport(type: string){
+        this.paramsReport.set("map", this.map.name);
+        if (this.patrolsTableMatSort.direction != '')
+            this.paramsReport.set("order", this.patrolsTableMatSort.direction);
+        if (this.patrolsTableMatSort.active != undefined){
+            let column = this.selectColumn(this.patrolsTableMatSort.active);
+            this.paramsReport.set("column", column.toString());
+        }
+        this.paramsReport.set("type", type);
+
+        this._patrolService.getReportPatrols(this.paramsReport).subscribe(
+            (data: Blob) => {
+                const downloadUrl = window.URL.createObjectURL(data);
+                const link = document.createElement('a');
+                link.href = downloadUrl;
+                switch(data.type){
+                    case 'application/octet-stream': link.download = 'reporte - ' + this.map.name + '.xlsx';
+                        break;
+                    case 'application/pdf' : link.download = 'reporte - ' + this.map.name + '.pdf';
+                        break;
+                }
+
+                link.click();
+              },
+              error => {
+                console.error(error)
+              }
+        );
     }
 
-    private _prepareChartData(): void {
-        this.chartUsers = {
-            chart      : {
-                fontFamily: 'inherit',
-                foreColor : 'inherit',
-                height    : '100%',
-                type      : 'bar',
-                toolbar   : {
-                    show: false
-                },
-                zoom      : {
-                    enabled: false
-                }
-            },
-            labels     : this.userLabel,
-            legend     : {
-                position: 'bottom'
-            },
-            plotOptions: {
-                polarArea: {
-                    spokes: {
-                        connectorColors: 'var(--fuse-border)'
-                    },
-                    rings : {
-                        strokeColor: 'var(--fuse-border)'
-                    }
-                }
-            },
-            series     :[{
-                            name: 'patrullajes',
-                            data: this.userSeries
-                        }],
-            colors     : ['#2469A0', '#10BCE3', '#3DD6AF', '#8BE27E'],
-            states     : {
-                hover: {
-                    filter: {
-                        type : 'darken',
-                        value: 0.75
-                    }
-                }
-            },
-            stroke     : {
-                width: 2
-            },
-            tooltip    : {
-                followCursor: true,
-                theme       : 'dark'
-            },
-            yaxis      : {
-                labels: {
-                    style: {
-                        colors: 'var(--fuse-text-secondary)'
-                    }
-                }
-            }
-        };
+    selectColumn(column: string) : String {
+        switch(column) {
+            case "username" : return "name";
+            case "created" : return "date";
+            case "qualification" : return "score";
+            case "totalSeconds" : return "time";
+            case "name" : return "map";
+        }
     }
 }

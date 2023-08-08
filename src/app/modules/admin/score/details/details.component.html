@@ -1,0 +1,275 @@
+<div class="absolute inset-0 flex flex-col min-w-0 overflow-auto md:overflow-scroll">
+    <div class="w-full p-10 pl-20">
+        <div class="text-4xl font-extrabold tracking-tight leading-none py-7">Administracion de puntajes</div>
+        <!-- Form -->
+        <form [formGroup]="scoreForm">
+            <ng-container *ngIf="scoreForm.hasError('percentageSumInvalid')">
+            <div class="p-3 rounded-xl bg-red-500 text-center">
+                <div class="text-2xl text-gray-50 font-bold">
+                    La suma de los valores debe ser igual al 100%.
+                </div>
+            </div>
+            </ng-container>
+
+            <!-- Section -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 w-full mt-4 bg-card p-8 rounded-xl">
+                <div class="flex items-center justify-between">
+                    <div class="flex-auto cursor-pointer">
+                        <div class="leading-6 font-medium">Salida de lineas amigas</div>
+                        <div class="text-md text-secondary w-3/4">
+                            Procedimiento que debe cumplir una patrulla para salir de la Base de Patrullas (PB).
+                        </div>
+                        <div class="col-span-1">
+                            <mat-form-field class="w-1/2">
+                                <mat-icon matPrefix class="hidden sm:flex icon-size-5 " svgIcon="heroicons_solid:scale"></mat-icon>
+                                <input matInput type="number" [formControlName]="'output'" placeholder="Porcentaje" [spellcheck]="false" [errorStateMatcher]="matcher">
+                                <mat-error *ngIf="scoreForm.get('output').errors">
+                                    {{matcher.getErrorMessage('output', scoreForm)}}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <div class="flex-auto cursor-pointer">
+                        <div class="leading-6 font-medium">Punto de Reunion antes del objetivo (PRO)</div>
+                        <div class="text-md text-secondary w-3/4">
+                            En este punto el ET y OBS protegen la retaguardia de la 
+                            unidad, permaneciendo en esta posición hasta la conclusión de 
+                            la misión.
+                        </div>
+                        <div class="col-span-1">
+                            <mat-form-field class="w-1/2">
+                                <mat-icon matPrefix class="hidden sm:flex icon-size-5 " svgIcon="heroicons_solid:scale"></mat-icon>
+                                <input matInput type="number" [formControlName]="'pro'" placeholder="Porcentaje" [spellcheck]="false" [errorStateMatcher]="matcher">
+                                <mat-error *ngIf="scoreForm.get('pro').errors">
+                                    {{matcher.getErrorMessage('pro', scoreForm)}}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <div class="flex-auto cursor-pointer">
+                        <div class="leading-6 font-medium">Reconocimiento en Trebol</div>
+                        <div class="text-md text-secondary w-3/4">
+                            Lugar donde el Jefe de Equipo asigna los sectores donde se ubicara 
+                            cada combatiente para proceder con las acciones en el objetivo.
+                        </div>
+                        <div class="col-span-1">
+                            <mat-form-field class="w-1/2">
+                                <mat-icon matPrefix class="hidden sm:flex icon-size-5 " svgIcon="heroicons_solid:scale"></mat-icon>
+                                <input matInput type="number" [formControlName]="'clover'" placeholder="Porcentaje" [spellcheck]="false" [errorStateMatcher]="matcher">
+                                <mat-error *ngIf="scoreForm.get('clover').errors">
+                                    {{matcher.getErrorMessage('clover', scoreForm)}}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <div class="flex-auto cursor-pointer">
+                        <div class="leading-6 font-medium">Punto de Disloque (PD)</div>
+                        <div class="text-md text-secondary w-3/4">
+                            Lugar donde el Jefe de Equipo asigna los sectores donde se ubicara 
+                            cada combatiente para proceder con las acciones en el objetivo.
+                        </div>
+                        <div class="col-span-1">
+                            <mat-form-field class="w-1/2">
+                                <mat-icon matPrefix class="hidden sm:flex icon-size-5 " svgIcon="heroicons_solid:scale"></mat-icon>
+                                <input matInput type="number" [formControlName]="'pd'" placeholder="Porcentaje" [spellcheck]="false" [errorStateMatcher]="matcher">
+                                <mat-error *ngIf="scoreForm.get('pd').errors">
+                                    {{matcher.getErrorMessage('pd', scoreForm)}}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <div class="flex-auto cursor-pointer">
+                        <div class="leading-6 font-medium">Reconocimiento del objetivo</div>
+                        <div class="text-md text-secondary w-3/4">
+                            Una vez ubicados en los lugares designados, proceden a cumplir 
+                            con el reconocimiento por un tiempo determinado.
+                        </div>
+                        <div class="col-span-1">
+                            <mat-form-field class="w-1/2">
+                                <mat-icon matPrefix class="hidden sm:flex icon-size-5 " svgIcon="heroicons_solid:scale"></mat-icon>
+                                <input matInput type="number" [formControlName]="'target'" placeholder="Porcentaje" [spellcheck]="false" [errorStateMatcher]="matcher">
+                                <mat-error *ngIf="scoreForm.get('target').errors">
+                                    {{matcher.getErrorMessage('target', scoreForm)}}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <div class="flex-auto cursor-pointer">
+                        <div class="leading-6 font-medium">Punto de Reunion despues del objetivo (PRDO)</div>
+                        <div class="text-md text-secondary w-3/4">
+                            La Patrulla se reorganiza en el PRO. recogen sus mochilas e 
+                            inician el repliegue hacia líneas amigas.
+                        </div>
+                        <div class="col-span-1">
+                            <mat-form-field class="w-1/2">
+                                <mat-icon matPrefix class="hidden sm:flex icon-size-5 " svgIcon="heroicons_solid:scale"></mat-icon>
+                                <input matInput type="number" [formControlName]="'prdo'" placeholder="Porcentaje" [spellcheck]="false"  [errorStateMatcher]="matcher">
+                                <mat-error *ngIf="scoreForm.get('prdo').errors">
+                                    {{matcher.getErrorMessage('prdo', scoreForm)}}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Divider -->
+            <div class="my-10 border-t"></div>
+    
+            <!-- Section -->
+            <mat-accordion>
+                <mat-expansion-panel (opened)="OutputPanelOpenState = true"
+                                    (closed)="OutputPanelOpenState = false">
+                <mat-expansion-panel-header class="bg-card">
+                    <mat-panel-title>
+                        <div class="w-full text-xl">Salida de lineas amigas</div>
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        Panel de tareas del objetivo {{OutputPanelOpenState ? 'abierto' : 'cerrado'}}
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 w-full mt-8">
+                        <div class="flex items-center justify-between">
+                            <div
+                                class="flex-auto cursor-pointer">
+                                <div class="leading-6 font-medium">Punto de Reunion Inicial (PRI)</div>
+                                <div class="text-md text-secondary">Dentro de la BP. la Patrulla se dirige al PRI. (Punto de Reunión Inicial)</div>
+                                <div class="col-span-1">
+                                    <mat-form-field class="w-1/2">
+                                        <mat-icon matPrefix class="hidden sm:flex icon-size-5 " svgIcon="heroicons_solid:scale"></mat-icon>
+                                        <input type="number" matInput [formControlName]="'pri'" placeholder="Porcentaje" [spellcheck]="false">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+        
+                        </div>
+                        <!-- Communication -->
+                        <div class="flex items-center justify-between">
+                            <div
+                                class="flex-auto cursor-pointer">
+                                <div class="leading-6 font-medium">Autorizacion de Salida</div>
+                                <div class="text-md text-secondary">El Comandante de Patrulla, se dirige al PC., pide autorización para abandonar la BP. y líneas amigas.</div>
+                                <div class="col-span-1">
+                                    <mat-form-field class="w-1/2">
+                                        <mat-icon matPrefix class="hidden sm:flex icon-size-5 " svgIcon="heroicons_solid:scale"></mat-icon>
+                                        <input type="number" matInput [formControlName]="'pc'" placeholder="Porcentaje" [spellcheck]="false">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+        
+                        </div>
+                        <!-- Security -->
+                        <div class="flex items-center justify-between">
+                            <div class="flex-auto cursor-pointer">
+                                <div class="leading-6 font-medium">Formacion de Salida</div>
+                                <div class="text-md text-secondary">
+                                    La Patrulla encolumnada bajo la protección del sistema de Seguridad de la BP. se desplaza siguiendo al guía hasta el puesto de Centinela.
+                                </div>
+                                <div class="col-span-1">
+                                    <mat-form-field class="w-1/2">
+                                        <mat-icon matPrefix class="hidden sm:flex icon-size-5 " svgIcon="heroicons_solid:scale"></mat-icon>
+                                        <input type="number" matInput [formControlName]="'formation'" placeholder="Porcentaje" [spellcheck]="false">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+        
+                        </div>
+                        <!-- Meetups -->
+                        <div class="flex items-center justify-between">
+                            <div class="flex-auto cursor-pointer">
+                                <div class="leading-6 font-medium">Punto de Pasaje (PP)</div>
+                                <div class="text-md text-secondary">
+                                    el Comandante de Patrulla, despliega la Seguridad a ambos flancos, enviando a la AMLIV. a un lado y al ET. al otro..
+                                </div>
+                                <div class="col-span-1">
+                                    <mat-form-field class="w-1/2">
+                                        <mat-icon matPrefix class="hidden sm:flex icon-size-5 " svgIcon="heroicons_solid:scale"></mat-icon>
+                                        <input type="number" matInput [formControlName]="'pp'" placeholder="Porcentaje" [spellcheck]="false">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+        
+                        <div class="flex items-center justify-between">
+                            <div class="flex-auto cursor-pointer">
+                                <div class="leading-6 font-medium">Avanzar hasta el punto de navegacion (PX)</div>
+                                <div class="text-md text-secondary">
+                                    El Equipo de Seguridad avanza con el Comandante y el RO.
+                                </div>
+                                <div class="col-span-1">
+                                    <mat-form-field class="w-1/2">
+                                        <mat-icon matPrefix class="hidden sm:flex icon-size-5 " svgIcon="heroicons_solid:scale"></mat-icon>
+                                        <input type="number" matInput [formControlName]="'px'" placeholder="Porcentaje" [spellcheck]="false">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+        
+                        <div class="flex items-center justify-between">
+                            <div class="flex-auto cursor-pointer">
+                                <div class="leading-6 font-medium">Reconocimiento en cajon</div>
+                                <div class="text-md text-secondary">
+                                    Realizar un reconocimiento en cajón del Punto “X” (Punto de inicio de la navegación).
+                                </div>
+                                <div class="col-span-1">
+                                    <mat-form-field class="w-1/2">
+                                        <mat-icon matPrefix class="hidden sm:flex icon-size-5 " svgIcon="heroicons_solid:scale"></mat-icon>
+                                        <input type="number" matInput [formControlName]="'boxPx'" placeholder="Porcentaje" [spellcheck]="false">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+        
+                        <div class="flex items-center justify-between">
+                            <div class="flex-auto cursor-pointer">
+                                <div class="leading-6 font-medium">Punto de Inicio de Navegacion (PX)</div>
+                                <div class="text-md text-secondary">
+                                    Realizar un alto de seguridad a campo traviesa tecnica el "RELOJ".
+                                </div>
+                                <div class="col-span-1">
+                                    <mat-form-field class="w-1/2">
+                                        <mat-icon matPrefix class="hidden sm:flex icon-size-5 " svgIcon="heroicons_solid:scale"></mat-icon>
+                                        <input type="number" matInput [formControlName]="'proPx'" placeholder="Porcentaje" [spellcheck]="false">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </mat-expansion-panel>
+            </mat-accordion>
+        
+            <!-- Divider -->
+            <div class="my-10 border-t"></div>
+            <!-- Actions -->
+            <div class="flex items-center justify-end">
+                <button
+                    mat-stroked-button
+                    type="button">
+                    Cancel
+                </button>
+                <button
+                    class="ml-4"
+                    mat-flat-button
+                    type="button"
+                    [color]="'primary'">Save
+                </button>
+            </div>
+        </form>
+    
+    </div>
+</div>

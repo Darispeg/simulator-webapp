@@ -43,4 +43,16 @@ export class PatrolService {
                 })
             )
     }
+
+    getReportPatrols(params : Map<string, string>): Observable<Blob> 
+    {
+        return this._httpClient.get(`${environment.APIurl}/reports/patrols/download`, { params : {
+            StartDate: '2022-01-01',
+            FinishDate: '2024-01-01',
+            map: params.get('map'),
+            column: params.get('column'),
+            order: params.get('order'),
+            type: params.get('type')
+        }, responseType : 'blob'});
+    }
 }

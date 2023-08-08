@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { BooleanInput } from '@angular/cdk/coercion';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { User } from 'app/core/user/user.types';
-import { UserService } from 'app/core/user/user.service';
+import { AuthUser } from 'app/core/auth-user/auth-user.types';
+import { AuthUserService } from 'app/core/auth-user/auth-user.service';
 
 @Component({
     selector       : 'user',
@@ -20,60 +20,33 @@ export class UserComponent implements OnInit, OnDestroy
     /* eslint-enable @typescript-eslint/naming-convention */
 
     @Input() showAvatar: boolean = true;
-    user: User;
+    user: AuthUser;
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-    /**
-     * Constructor
-     */
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
         private _router: Router,
-        private _userService: UserService
-    )
-    {
-    }
+        private _userService: AuthUserService
+    ){}
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * On init
-     */
     ngOnInit(): void
     {
         // Subscribe to user changes
         this._userService.user$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((user: User) => {
+            .subscribe((user: AuthUser) => {
                 this.user = user;
-
-                // Mark for check
                 this._changeDetectorRef.markForCheck();
             });
     }
 
-    /**
-     * On destroy
-     */
     ngOnDestroy(): void
     {
-        // Unsubscribe from all subscriptions
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * Update the user status
-     *
-     * @param status
-     */
     updateUserStatus(status: string): void
     {
         // Return if user is not available
@@ -89,9 +62,6 @@ export class UserComponent implements OnInit, OnDestroy
         }).subscribe();
     }
 
-    /**
-     * Sign out
-     */
     signOut(): void
     {
         this._router.navigate(['/sign-out']);

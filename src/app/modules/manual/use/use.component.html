@@ -1,0 +1,239 @@
+<div class="w-full">
+    <div class="bg-fixed bg-contain overflow-auto h-full md:w-full" [ngStyle]="{'background-image':'url(' + imageUrl + ')'}">
+        <div class="grid grid-cols-2 md:grid-cols-4">
+            <div class="col-span-2 mx-auto md:py-12">
+                <img  class="w-48 h-30 md:h-36 mx-auto pb-5"
+                      [src]="'assets/images/logo/emi-2.png'">
+                <span class="text-xl md:text-3xl font-mono font-extrabold text-gray-50">ESCUELA MILITAR DE INGENIERIA</span>
+            </div>
+            <div class="col-span-2 mx-auto py-2 md:py-12">
+                <img  class="w-48 h-30 md:h-36 mx-auto pb-5"
+                      [src]="'assets/images/avatars/avatar-user.png'">
+                <span class="text-xl md:text-3xl font-mono font-extrabold text-gray-50">INGENIERIA DE SISTEMAS</span>
+            </div>
+        </div>
+        <div class="bg-card grid grid-cols-1 md:grid-cols-2 p-10">
+            <div class="mx-auto my-5">
+                <img class="w-full md:h-96 mx-auto rounded-lg" [src]="'assets/images/pictures/train-vr.jpg'">
+            </div>
+            <div class="md:p-10 text-center md:text-xl">
+                <span class="text-2xl font-bold">MANUAL DE USUARIO</span>
+                <div class="text-justify mt-5">
+                    El objetivo principal de este manual es proporcionar 
+                    una guía clara y concisa para que el usuario pueda comprender 
+                    y aprovechar al máximo las capacidades del simulador.
+                    <br> Para lograr esto, se han desglosado las funcionalidades, 
+                    brindando una explicación detallada de cada una de ellas.
+                    Estas funcionalidades son:
+                    <ul class="list-inside font-extrabold font-mono mt-4 md:ml-4 text-left">
+                        <li>-  Inicio de sesión</li>
+                        <li>-  Controles del simulador</li>
+                        <li>-  Menu de tecnicas</li>
+                    </ul> 
+                </div>
+            </div>
+        </div>
+        <div class="bg-card grid grid-cols-1 md:grid-cols-2 p-10">
+            <span class="col-span-1 md:col-span-2 text-center text-2xl font-bold bg-teal-600 text-gray-50 p-4">INICIO DE SESIÓN</span>
+            <div class="text-center md:text-xl mt-10 md:px-10">
+                <span class="text-2xl font-bold">Configuración del sistema guardián</span>
+                <div class="text-justify mt-5">
+                    El sistema guardián es una función de seguridad integrada que te 
+                    permite establecer límites en realidad virtual que aparecerán cuando te 
+                    acerques demasiado al perímetro de la zona de juego. Pasos a seguir:
+                    <ul class="list-inside font-extrabold font-mono mt-4 md:ml-4 text-left">
+                        <li>-  Definir zona de juego.</li>
+                        <li>-  Encender Visores.</li>
+                        <li>-  Establecer limite del suelo.</li>
+                        <li>-  Dibujar area de juego.</li>
+                        <li>-  Asegurar limites del area.</li>
+                    </ul> 
+                </div>
+            </div>
+            <div class="md:p-10 mx-auto mt-5">
+                <img class="w-full md:h-72 mx-auto rounded-lg" [src]="'assets/images/pictures/Guardian.jpg'">
+            </div>
+        </div>
+        <div class="bg-card grid grid-cols-1 md:grid-cols-3 px-10 gap-4">
+            <div class="mx-auto col-span-1 sm:col-span-3 text-center">
+                <span class="font-bold text-lg">Definir zona de juego</span>
+                <img class="w-full md:h-64 mx-auto rounded-lg" [src]="'assets/images/pictures/definir-zona.png'">
+            </div>
+            <div class="mx-auto col-span-1 text-center">
+                <span class="font-bold text-lg">Encender Visores</span>
+                <img class="w-full h-52 mx-auto rounded-lg" [src]="'assets/images/pictures/encender.png'">
+            </div>
+            <div class="mx-auto col-span-1 text-center">
+                <span class="font-bold text-lg">Establecer limite del suelo</span>
+                <img class="w-full h-52 mx-auto rounded-lg" [src]="'assets/images/pictures/limite.png'">
+            </div>
+            <div class="mx-auto col-span-1 text-center">
+                <span class="font-bold text-lg">Dibujar area de juego</span>
+                <img class="w-full h-52 mx-auto rounded-lg" [src]="'assets/images/pictures/dibujar.png'">
+            </div>
+            <div class="mx-auto col-span-1 sm:col-span-3 text-center">
+                <span class="font-bold text-lg">Asegurar limites del area</span>
+                <img class="w-full md:h-64 mx-auto rounded-lg" [src]="'assets/images/pictures/guardian-2.png'">
+            </div>
+        </div>
+        <div class="bg-card grid grid-cols-1 md:grid-cols-2 p-10">
+            <div class="text-center md:text-xl md:mt-10 md:px-10">
+                <span class="text-2xl font-bold">Ingresar credenciales</span>
+                <div class="text-justify mt-5">
+                    Al comenzar el entrenamiento en el simulador, 
+                    se le transportara al entorno de inicio de sesión. Aquí se pude de explorar 
+                    y probar las funciones de seguimiento de movimiento de manos, así como revisar 
+                    los diferentes componentes del simulador
+                    <br><br>
+                    Se pueden encuentran elementos 
+                    interactivos que te permitirán familiarizarte con los controles 
+                    y las capacidades de seguimiento de manos del sistema. 
+                    Podrás mover tus manos y ver cómo el simulador responde a tus gestos y acciones,
+                    busca la interfaz de inicio de sesión y 
+                    dentro de esta interfaz seleccione los 2 campos con ayuda del “Debug Pointer” o lacer
+                </div>
+            </div>
+            <div class="md:p-10 mx-auto text-center mt-4">
+                <span class="font-bold text-lg">Login del simulador</span>
+                <img class="w-full md:h-72 mx-auto rounded-lg" [src]="'assets/images/pictures/login.png'">
+            </div>
+        </div>
+        <div class="bg-card grid grid-cols-1 md:grid-cols-2 px-10 pb-10">
+            <div class="md:p-10 mx-auto text-center">
+                <span class="font-bold text-lg">Elegir Mapa</span>
+                <img class="w-full md:h-52 mx-auto rounded-lg" [src]="'assets/images/pictures/seleccionar mapa.png'">
+            </div>
+            <div class="text-center md:text-xl mt-5 md:mt-10 md:px-10">
+                <span class="text-2xl font-bold">Seleccion de Mapa</span>
+                <div class="text-justify mt-5">
+                    Una vez que ingrese las credenciales correctamente, 
+                    el sistema lo redirigire a la siguiente interfaz. 
+                    En esta interfaz, encontrarás varias opciones disponibles para seleccionar. 
+                    Debes buscar y seleccionar la opción "Mapas".
+                    Al seleccionar la opción "Mapas", se te presentara una lista o 
+                    una galería de mapas para que elija el mapa para realizar el entrenamiento
+                </div>
+            </div>
+        </div>
+        <div class="bg-card grid grid-cols-1 md:grid-cols-2 px-10 p-10">
+            <span class="col-span-1 md:col-span-2 text-center text-2xl font-bold bg-teal-600 text-gray-50 p-4">CONTROLES DEL SIMULADOR</span>
+            <div class="text-center md:text-xl mt-10 md:px-10 col-span-2">
+              <div class="text-justify mt-5">
+                <p>
+                  Se presenta una imagen que ilustra las funciones de los botones en los controles táctiles de Oculus. Esta imagen proporciona una guía visual detallada de los distintos botones y su funcionalidad en los controles:
+                </p>
+                <ul class="list-inside mt-4 md:ml-4 text-left">
+                  <li>
+                    <strong>1. Stick analógico:</strong><br>
+                    &nbsp;• Izquierdo (Locomoción): Este stick te permite controlar el movimiento dentro del entorno virtual. Puedes desplazarlo en diferentes direcciones para moverte en el espacio virtual.<br>
+                    &nbsp;• Derecho (Giro): Este stick te permite girar dentro del entorno virtual. Puedes rotar en el entorno virtual sin girar la cabeza en la vida real.<br>
+                    &nbsp;• Click: Abre el menú de técnicas de patrullaje, donde podrás seleccionar las diferentes técnicas implementadas dentro del simulador.
+                  </li>
+                  <li>
+                    <strong>2. Botón de menú del sistema:</strong><br>
+                    &nbsp;• Abre el menú de Oculus que se puede utilizar para configurar algunas funciones como por ejemplo el sistema guardián.
+                  </li>
+                  <li>
+                    <strong>3. Botón “A”:</strong><br>
+                    &nbsp;• Se utiliza para cambiar la vista entre las interfaces del Mini mapa y la lista de tareas.
+                  </li>
+                  <li>
+                    <strong>4. Botón de disparo (Trigger):</strong><br>
+                    &nbsp;• Este botón se utiliza para realizar acciones de disparo, como interactuar con elementos específicos del entorno o disparar un arma virtual.
+                  </li>
+                  <li>
+                    <strong>5. Botón de agarre (Grip / Grab):</strong><br>
+                    &nbsp;• Este botón permite agarrar objetos o realizar acciones de agarre en el entorno virtual. Al presionarlo, podrás sujetar y manipular objetos virtuales con mayor precisión.
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-5 col-span-2">
+                <div></div>
+                <div class="col-span-3 md:p-10 mx-auto mt-5">       
+                    <img class="w-full mx-auto rounded-lg" [src]="'assets/images/pictures/controles.png'">
+                  </div>
+                <div></div>
+            </div>
+        </div>          
+        <div class="bg-card grid grid-cols-1 md:grid-cols-2 p-10">
+            <span class="col-span-1 md:col-span-2 text-center text-2xl font-bold bg-primary-800 text-gray-50 p-4">MENÚ DE TÉCNICAS DE PATRULLAJE</span>
+            <div class="md:p-10 mx-auto mt-5">
+                <img class="w-full md:h-72 mx-auto rounded-lg" [src]="'assets/images/pictures/tecnicas.png'">
+            </div>
+            <div class="text-center md:text-xl mt-10 md:px-10">
+                <span class="text-2xl font-bold">Menú de técnicas</span>
+                <div class="text-justify mt-5">
+                    El menú que facilita la comunicación entre el usuario y los NPC se presenta como una interfaz 
+                    interactiva que ofrece varias opciones seleccionables. Para elegir una opción específica, 
+                    simplemente se debe presionar el botón de disparo (trigger) en el control correspondiente a la opción deseada.
+                    Al utilizar el botón de disparo (trigger) para seleccionar una opción del menú, se activa la acción correspondiente 
+                    y se establece la comunicación con el NPC de acuerdo a la opción elegida. 
+                </div>
+            </div>
+            <div class="text-center md:text-xl mt-10 md:px-10">
+                <div class="text-justify mt-5">
+                    <p>
+                      <strong>Técnicas de reconocimiento de ruta.</strong>
+                      Selecciona la opción “RUTA” que abre un panel con las técnicas de reconocimiento de ruta que se pueden realizar.
+                    </p>
+                    <p>
+                        Estas técnicas se dividen en tres categorías: "Columna", "Cuña" y "Reloj".
+                        Cada técnica ofrece una estrategia particular para el reconocimiento de los NPC en el simulador.
+                    </p>
+                    <ol>
+                      <li>
+                        <strong>Columna:</strong>
+                        Al seleccionar esta opción los NPC adoptan la formación en columna de tiradores.
+                        Cada equipo ocupa las posiciones delimitadas por el reglamento de instrucción de patrullaje.
+                      </li>
+                      <li>
+                        <strong>Cuña:</strong>
+                        Al seleccionar esta opción los NPC adoptan la formación en cuña.
+                        Cada equipo ocupa las posiciones delimitadas por el reglamento de instrucción de patrullaje.
+                        Con ayuda del mini mapa se puede ver las formaciones que realizan los NPC.
+                      </li>
+                      <li>
+                        <strong>Reloj:</strong>
+                        Al seleccionar esta opción los NPC realizan un alto de seguridad “técnica el reloj”.
+                        Cada equipo ocupa las posiciones delimitadas por el reglamento de instrucción de patrullaje.
+                      </li>
+                    </ol>
+                    <br>
+                    <p>
+                      Además de las técnicas de reconocimiento, en la parte inferior del panel se encuentran tres opciones de distancia:
+                      "Small", "Medium" y "Large".
+                      Estas opciones permiten ajustar la distancia a la cual los NPC realizan la técnica de reconocimiento seleccionada.
+                      Al elegir una opción de distancia, se determinará la proximidad entre el usuario y los NPC durante la aplicación de la técnica.
+                    </p>
+                  </div>
+            </div>
+            <div class="md:p-10 mx-auto mt-5 text-center">
+                <span class="font-bold text-lg">Tecnicas de reconocimiento ruta</span>
+                <img class="w-full md:h-72 mx-auto rounded-lg mb-5" [src]="'assets/images/pictures/ruta.png'">
+                <span class="font-bold text-lg">Cambiar distancia de formacion</span>
+                <img class="w-full md:h-72 mx-auto rounded-lg" [src]="'assets/images/pictures/tamanio.png'">
+            </div>
+            <div class="md:p-10 mx-auto mt-5 text-center">
+                <span class="font-bold text-lg">Tecnicas de reconocimiento área</span>
+                <img class="w-full md:h-72 mx-auto rounded-lg mb-5" [src]="'assets/images/pictures/area.png'">
+            </div>
+            <div class="text-center md:text-xl md:mt-10 md:px-10">
+                <div class="text-justify mt-5">
+                    <p>
+                        <strong>Técnicas de reconocimiento de área.</strong>
+                        Al seleccionar esta opción, se abre un panel que presenta las diferentes técnicas de reconocimiento de área disponibles. Estas técnicas se dividen en 2 categorías: "Cajón" y "Trébol". Cada técnica ofrece una estrategia particular para el reconocimiento de los NPC en el simulador.
+                      </p>
+                      <ol class="list-decimal mt-4 md:ml-4 text-left">
+                        <li>
+                          <strong>Cajón:</strong> Al seleccionar esta opción, el equipo de seguridad conformado por NPC realiza un reconocimiento en cajón.
+                        </li>
+                        <li>
+                          <strong>Trébol:</strong> Al elegir esta opción, tanto el equipo de seguridad como el equipo de asalto conformado por los NPC realizarán un reconocimiento en la zona designada como trébol. Durante este reconocimiento, los NPC llevan a cabo una estrategia táctica de exploración en forma de trébol, cubriendo de manera eficiente los puntos clave.
+                        </li>
+                      </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

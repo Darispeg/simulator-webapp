@@ -26,7 +26,7 @@ const themes = {
         },
         accent   : {
             ...colors.blueGray,
-            DEFAULT: colors.blueGray[800]
+            DEFAULT: colors.teal[600]
         },
         warn     : {
             ...colors.red,

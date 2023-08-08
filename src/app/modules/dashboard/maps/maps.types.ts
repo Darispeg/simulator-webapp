@@ -1,6 +1,6 @@
 import { Patrol } from "../patrols/patrols.model"
 
-export interface Map {
+export interface MapSimulator {
     key? : string,
     name : string
     patrols : Patrol[]

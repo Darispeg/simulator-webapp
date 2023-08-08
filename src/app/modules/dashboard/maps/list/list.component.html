@@ -39,7 +39,7 @@
                                                         [ngClass]="{'text-blue-900': (i) === 0, 'text-blue-400': (i) === 1, 'text-green-700': (i) === 2, 'text-green-400': (i) === 3}">
                                                         Patrullajes
                                                 </div>
-                                                <button class="fuse-mat-button-rounded hover:bg-blue-300 w-full" mat-flat-button [color]="'accent'" (click)="MapFindByKey(map.mapKey)">
+                                                <button class="fuse-mat-button-rounded hover:bg-blue-300 w-full" mat-flat-button [color]="'primary'" (click)="MapFindByKey(map.mapKey)">
                                                     <span>Detalles del mapa</span>
                                                 </button>
                                             </div>
@@ -95,9 +95,19 @@
                 <mat-tab label="Patrullajes">
                     <ng-template matTabContent>
                         <div class="xl:col-span-2 flex flex-col flex-auto bg-card shadow rounded-2xl overflow-hidden">
-                            <div class="p-6">
+                            <div class="p-6 bg-gray-300">
                                 <div class="mr-4 text-lg font-medium tracking-tight leading-6 truncate">Patrullajes de Reconocimiento</div>
                                 <div class="text-secondary font-medium">Tabla de patrullajes de Reconocimiento</div>
+                                <div *appRole="['ROLE_ADMIN']" class="text-center sm:text-right">
+                                    <button mat-button class="mt-3 mx-3 bg-teal-500 text-gray-50 hover:bg-teal-800 border-teal-800" matTooltip="Descargar" (click)="downloadReport('EXCEL')">
+                                        <mat-icon class="text-gray-50" [svgIcon]="'heroicons_outline:download'"></mat-icon>
+                                        <span class="ml-2 mr-1">EXCEL</span>
+                                    </button>
+                                    <button mat-button class="mt-3 bg-indigo-500 text-indigo-50 hover:bg-indigo-800 border-indigo-800" matTooltip="Descargar" (click)="downloadReport('PDF')">
+                                        <mat-icon class="text-gray-50" [svgIcon]="'heroicons_outline:download'"></mat-icon>
+                                        <span class="ml-2 mr-1">PDF</span>
+                                    </button>
+                                </div>
                             </div>
                             <div class="overflow-x-auto mx-6">
                                 <table class="w-full bg-transparent" mat-table matSort [dataSource]="patrolsDataSource" 

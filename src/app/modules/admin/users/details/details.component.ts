@@ -70,9 +70,7 @@ export class UsersDetailsComponent implements OnInit, OnDestroy {
             .subscribe((User: User) => {
                 this._usersListComponent.matDrawer.open();
                 this.user = User;
-
                 this.userForm.patchValue(User);
-                
                 this.toggleEditMode(User.key ? false : true);
                 this._changeDetectorRef.markForCheck();
             });

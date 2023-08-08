@@ -4,7 +4,11 @@
 
 export const environment = {
     production: false,
-    APIurl: "http://localhost:8080/api/v1"
+    APIurl: "http://localhost:8080/api/v1",
+    AuthUrl: "http://localhost:8080/login"
+    //APIurl: "http://200.58.77.95:7014/api/v1",
+    //AuthUrl: "http://200.58.77.95:7014/login"
+    //APIurl: "https://simulator-patrol-emi.herokuapp.com/api/v1" 
 };
 
 /*

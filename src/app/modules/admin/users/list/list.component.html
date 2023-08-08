@@ -28,7 +28,7 @@
                             </mat-form-field>
                         </div>
                         <!-- Add Usuario Button -->
-                        <button class="ml-4" mat-flat-button [color]="'primary'" (click)="createUser()">
+                        <button *appRole="['ROLE_ADMIN']" class="ml-4" mat-flat-button [color]="'primary'" (click)="createUser()">
                             <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
                             <span class="ml-2 mr-1">Agregar</span>
                         </button>
@@ -44,10 +44,10 @@
                         <ng-container *ngIf="users.length; else empty">
                             <ng-container *ngFor="let user of users; let i = index; trackBy: trackByFn">
                                 <!-- Users -->
-                                <a class="z-20 flex items-center px-6 py-4 md:px-8 cursor-pointer border-b" [ngClass]="{'hover:bg-gray-100': !selectedUser || selectedUser.key !== user.key,
+                                <a class="z-20 flex items-center px-6 py-4 md:px-8 cursor-pointer border-b" [ngClass]="{'hover:bg-yellow-50': !selectedUser || selectedUser.key !== user.key,
                                     'bg-primary-50' : selectedUser && selectedUser.key === user.key}" [routerLink]="['./', user.key]">
                                     <div class="flex flex-0 items-center justify-center w-10 h-10 rounded-full overflow-hidden">
-                                        <div class="flex items-center justify-center w-full h-full rounded-full" [ngClass]="{'text-green-800 bg-green-200 dark:text-green-100 dark:bg-green-500': (user.status|lowercase) === 'active',
+                                        <div class="flex items-center justify-center w-full h-full rounded-full" [ngClass]="{'text-blue-800 bg-blue-200 dark:text-blue-100 dark:bg-blue-500': (user.status|lowercase) === 'active',
                                         'text-red-800 bg-red-200 dark:text-red-100 dark:bg-red-500': (user.status|lowercase) === 'inactive'}">
                                             <!-- Activo -->
                                             <ng-container *ngIf="(user.status|lowercase) === 'active'">
@@ -61,7 +61,7 @@
                                         </div>
                                     </div>
                                     <div class="min-w-0 ml-4">
-                                        <div class="font-medium leading-5 truncate">{{user.name}}</div>
+                                        <div class="font-medium leading-5 truncate">{{(user.rank|uppercase) + ". " +user.name + " " + user.lastName}}</div>
                                         <div class="leading-5 truncate text-secondary">{{user.email}}</div>
                                     </div>
                                 </a>

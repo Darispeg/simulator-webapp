@@ -22,17 +22,12 @@ export class AuthSignInComponent implements OnInit
     signInForm: FormGroup;
     showAlert: boolean = false;
 
-    /**
-     * Constructor
-     */
     constructor(
         private _activatedRoute: ActivatedRoute,
         private _authService: AuthService,
         private _formBuilder: FormBuilder,
         private _router: Router
-    )
-    {
-    }
+    ){}
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
@@ -45,9 +40,8 @@ export class AuthSignInComponent implements OnInit
     {
         // Create the form
         this.signInForm = this._formBuilder.group({
-            email     : ['warehouse@fusip.org', [Validators.required, Validators.email]],
-            password  : ['admin', Validators.required],
-            rememberMe: ['']
+            username     : ['', [Validators.required]],
+            password  : ['', Validators.required],
         });
     }
 
@@ -83,22 +77,17 @@ export class AuthSignInComponent implements OnInit
                     // routing file and we don't have to touch here.
                     const redirectURL = this._activatedRoute.snapshot.queryParamMap.get('redirectURL') || '/signed-in-redirect';
 
-                    // Navigate to the redirect url
                     this._router.navigateByUrl(redirectURL);
 
                 },
                 (response) => {
-
-                    // Re-enable the form
                     this.signInForm.enable();
-
-                    // Reset the form
                     this.signInNgForm.resetForm();
 
                     // Set the alert
                     this.alert = {
                         type   : 'error',
-                        message: 'Wrong email or password'
+                        message: 'Usuario o contraseña incorrecto'
                     };
 
                     // Show the alert

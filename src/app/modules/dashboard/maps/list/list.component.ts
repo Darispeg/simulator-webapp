@@ -8,7 +8,7 @@ import { takeUntil } from "rxjs/operators";
 import { Patrol } from "../../patrols/patrols.model";
 import { PatrolService } from "../../patrols/patrols.service";
 import { MapsService } from "../maps.service";
-import { Map } from "../maps.types";
+import { MapSimulator } from "../maps.types";
 
 @Component({
     selector       : 'maps-list',
@@ -33,10 +33,17 @@ export class MapsListComponent implements OnInit, AfterViewInit, OnDestroy
 
     chartTaskDistribution: ApexOptions = {};
     chartPatrolsForMap: ApexOptions = {};
-    maps$: Observable<Map[]>;
-    mapsChart: Map[];
+    maps$: Observable<MapSimulator[]>;
+    mapsChart: MapSimulator[];
     mapsLabel: string[] = [];
     mapsSeries: number[] = [];
+
+    paramsReport = new Map<string, string>([
+        ["map", "value"],
+        ["order", "desc"],
+        ["column", "created"],
+        ["type", "PDF"]
+    ]);
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
@@ -237,5 +244,45 @@ export class MapsListComponent implements OnInit, AfterViewInit, OnDestroy
         let secondNumber = seconds % 60;
         let second = (secondNumber < 10)? '0' + secondNumber : secondNumber;
         return hour + ':' + minute + ':' + second;
+    }
+
+    downloadReport(type: string){
+        this.paramsReport.set("map", "");
+        if (this.recognitionsTableMatSort.direction != '')
+            this.paramsReport.set("order", this.recognitionsTableMatSort.direction);
+        if (this.recognitionsTableMatSort.active != undefined){
+            let column = this.selectColumn(this.recognitionsTableMatSort.active);
+            this.paramsReport.set("column", column.toString());
+        }
+        this.paramsReport.set("type", type);
+
+        this._patrolsService.getReportPatrols(this.paramsReport).subscribe(
+            (data: Blob) => {
+                const downloadUrl = window.URL.createObjectURL(data);
+                const link = document.createElement('a');
+                link.href = downloadUrl;
+                switch(data.type){
+                    case 'application/octet-stream': link.download = 'reporte-del-simulador.xlsx';
+                        break;
+                    case 'application/pdf' : link.download = 'reporte-del-simulador.pdf';
+                        break;
+                }
+
+                link.click();
+              },
+              error => {
+                console.error(error)
+              }
+        );
+    }
+
+    selectColumn(column: string) : String {
+        switch(column) {
+            case "username" : return "name";
+            case "created" : return "date";
+            case "qualification" : return "score";
+            case "totalSeconds" : return "time";
+            case "map" : return "map";
+        }
     }
 }

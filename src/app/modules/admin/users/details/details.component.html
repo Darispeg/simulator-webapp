@@ -2,11 +2,11 @@
     <!-- View mode -->
     <ng-container *ngIf="!editMode">
         <!-- Header -->
-        <div class="flex items-center justify-between bg-blue-900 w-full h-16 p-6 pt-0 pb-0 sm:px-12 dark:bg-accent-700">
+        <div class="flex items-center justify-between bg-primary-900 w-full h-16 p-6 pt-0 pb-0 sm:px-12 dark:bg-accent-700">
             <div class="flex items-center justify-center">
                 <span class="font-medium text-white text-2xl truncate">Detalles del Usuario</span>
             </div>
-            <div class="flex items-center">
+            <div *appRole="['ROLE_ADMIN']" class="flex items-center">
                 <!-- More menu -->
                 <button mat-icon-button [matMenuTriggerFor]="moreMenu">
                     <mat-icon class="text-white" svgIcon="heroicons_outline:dots-vertical"></mat-icon>
@@ -58,29 +58,27 @@
                     </div>
                 </div>
 
-                <div class="flex flex-col mt-4 pt-6 border-t space-y-8">
-                    <!-- Email -->
-                    <ng-container *ngIf="user.ffaa">
-                        <div class="flex">
-                            <mat-icon svgIcon="heroicons_outline:flag"></mat-icon>
-                            <div class="max-w-none ml-6 prose prose-sm">{{(user.ffaa|uppercase)}}</div>
-                        </div>
-                    </ng-container>
+                <div class="grid grid-cols-1 sm:grid-cols-2 mt-4 pt-6 border-t space-y-8">
+                    <!-- FFAA -->
+                    <div class="flex col-span-1">
+                        <mat-icon svgIcon="heroicons_outline:shield-check"></mat-icon>
+                        <div class="max-w-none ml-6 prose prose-sm font-serif font-extrabold text-lg">{{(user.ffaa|uppercase)}}, BOLIVIA</div>
+                    </div>
                     <!-- Fullname -->
-                    <div class="flex sm:items-center">
+                    <div class="flex grid-cols-1 sm:col-span-2">
                         <mat-icon svgIcon="heroicons_outline:user-circle"></mat-icon>
-                        <div class="ml-6 leading-6">{{(user.rank|uppercase)}}. {{user.name}} {{user.lastName}}</div>
+                        <div class="ml-6 leading-6 text-lg">{{(user.rank|uppercase)}}. {{user.name}} {{user.lastName}}</div>
                     </div>
                     <!-- Username -->
                     <div class="flex sm:items-center">
                         <mat-icon svgIcon="heroicons_outline:identification"></mat-icon>
-                        <div class="ml-6 leading-6">{{user.username}}</div>
+                        <div class="ml-6 leading-6 text-lg">Usuario: {{user.username}}</div>
                     </div>
                     <!-- Email -->
                     <ng-container *ngIf="user.email">
                         <div class="flex">
                             <mat-icon svgIcon="heroicons_outline:mail"></mat-icon>
-                            <div class="max-w-none ml-6 prose prose-sm">{{user.email}}</div>
+                            <div class="max-w-none ml-6 prose prose-sm text-lg">{{user.email}}</div>
                         </div>
                     </ng-container>
 
@@ -88,7 +86,15 @@
                     <ng-container *ngIf="user.created">
                         <div class="flex">
                             <mat-icon svgIcon="heroicons_outline:calendar"></mat-icon>
-                            <div class="max-w-none ml-6 prose prose-sm">{{user.created | date:'mediumDate'}}</div>
+                            <div class="max-w-none ml-6 prose prose-sm text-lg">Registro: {{user.created | date:'mediumDate'}}</div>
+                        </div>
+                    </ng-container>
+
+                    <!-- Patrols -->
+                    <ng-container *ngIf="user.patrols">
+                        <div class="flex">
+                            <mat-icon svgIcon="heroicons_outline:hashtag"></mat-icon>
+                            <div class="max-w-none ml-6 prose prose-sm text-lg">Entrenamientos: {{user.patrols.length}}</div>
                         </div>
                     </ng-container>
                 </div>
@@ -99,7 +105,7 @@
     <ng-container *ngIf="editMode">
 
         <!-- Header -->
-        <div class="flex items-center justify-between bg-blue-900 w-full h-16 px-8 sm:px-12 dark:bg-accent-700">
+        <div class="flex items-center justify-between bg-primary-900 w-full h-16 px-8 sm:px-12 dark:bg-accent-700">
             <div class="flex items-center justify-center">
                 <span class="font-medium text-white text-2xl">
                     {{ user.key === ''? 'Registrar': 'Editar'}} Usuario
@@ -195,22 +201,34 @@
                     <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6 w-full min-w-0">
                         <div class="grid-cols-1">
                             <mat-form-field class="w-full">
-                                <mat-label>Fuerza Armada</mat-label>
-                                <mat-icon matPrefix class="hidden sm:flex icon-size-5 " svgIcon="heroicons_solid:flag"></mat-icon>
-                                <input matInput [formControlName]="'ffaa'" placeholder="Fuerza Armada" [spellcheck]="false" [errorStateMatcher]="matcher">
-                                <mat-error *ngIf="userForm.get('ffaa').errors">
-                                    {{matcher.getErrorMessage('ffaa', userForm)}}
-                                </mat-error>
+                              <mat-label>Fuerza Armada</mat-label>
+                              <mat-icon matPrefix class="hidden sm:flex icon-size-5" svgIcon="heroicons_solid:flag"></mat-icon>
+                              <mat-select [formControlName]="'ffaa'" [errorStateMatcher]="matcher">
+                                <mat-option value="ejercito">Ejercito</mat-option>
+                                <mat-option value="fuerza aerea">Fuerza Aerea</mat-option>
+                                <mat-option value="naval">Naval</mat-option>
+                                <!-- Agrega opciones adicionales aquí -->
+                              </mat-select>
+                              <mat-error *ngIf="userForm.get('ffaa').errors">
+                                {{ matcher.getErrorMessage('ffaa', userForm) }}
+                              </mat-error>
                             </mat-form-field>
                         </div>
                         <div class="grid-cols-1">
                             <mat-form-field class="w-full">
-                                <mat-label>Rango</mat-label>
-                                <mat-icon matPrefix class="hidden sm:flex icon-size-5 " svgIcon="heroicons_solid:academic-cap"></mat-icon>
-                                <input matInput [formControlName]="'rank'" placeholder="Rango" [spellcheck]="false" [errorStateMatcher]="matcher">
-                                <mat-error *ngIf="userForm.get('rank').errors">
-                                    {{matcher.getErrorMessage('rank', userForm)}}
-                                </mat-error>
+                              <mat-label>Rango</mat-label>
+                              <mat-icon matPrefix class="hidden sm:flex icon-size-5" svgIcon="heroicons_solid:academic-cap"></mat-icon>
+                              <mat-select [formControlName]="'rank'" [errorStateMatcher]="matcher">
+                                <mat-option value="est">Estudiante</mat-option>
+                                <mat-option value="Sbtte">Subteniente</mat-option>
+                                <mat-option value="Tte">Teniente</mat-option>
+                                <mat-option value="Cap">Capitán</mat-option>
+                                <mat-option value="May">Mayor</mat-option>
+                                <mat-option value="Tcnl">Teniente Coronel</mat-option>
+                              </mat-select>
+                              <mat-error *ngIf="userForm.get('rank').errors">
+                                {{ matcher.getErrorMessage('rank', userForm) }}
+                              </mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -236,6 +254,25 @@
                                 {{matcher.getErrorMessage('password', userForm)}}
                             </mat-error>
                         </mat-form-field>
+                    </div>
+
+                    <div class="mt-4">
+                        <mat-accordion class="p-3">
+                            <mat-expansion-panel class="bg-primary-100" (opened)="OutputPanelOpenState = true"
+                                                (closed)="OutputPanelOpenState = false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <span class="flex items-center h-10 min-h-10 px-4">Roles y permisos del sistema</span>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                                <mat-checkbox class="flex items-center h-10 min-h-10 px-4 ml-3" [color]="'accent'" [checked]="true">
+                                    <span>Administrador</span>
+                                </mat-checkbox>
+                                <mat-checkbox class="flex items-center h-10 min-h-10 px-4 ml-3" [color]="'accent'" [checked]="true">
+                                    <span>Estudiante</span>
+                                </mat-checkbox>
+                            </mat-expansion-panel>
+                        </mat-accordion>
                     </div>
 
                     <!-- Actions -->

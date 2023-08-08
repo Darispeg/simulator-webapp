@@ -61,9 +61,16 @@ export const appRoutes: Route[] = [
                 ]
             },
             {
+                path: 'install', loadChildren: () => import('app/modules/manual/install/install.module').then(m => m.InstallModule)
+            },
+            {
+                path: 'use', loadChildren: () => import('app/modules/manual/use/use.module').then(m => m.UseModule)
+            },
+            {
                 path: 'admin', children:
                 [
-                    {path:'users', loadChildren: () => import('app/modules/admin/users/users.module').then(m => m.UsersModule)}
+                    {path:'users', loadChildren: () => import('app/modules/admin/users/users.module').then(m => m.UsersModule)},
+                    {path:'scores', loadChildren: () => import('app/modules/admin/score/score.module').then(m => m.ScoreModule)}
                 ]
             },
             { path: '**', redirectTo: 'dashboard.maps'}

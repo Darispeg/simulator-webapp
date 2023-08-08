@@ -15,7 +15,7 @@
 
             <!-- Branch: aside, collapsable, group -->
             <ng-container *ngIf="item.type === 'aside' || item.type === 'collapsable' || item.type === 'group'">
-                <fuse-horizontal-navigation-branch-item
+                <fuse-horizontal-navigation-branch-item *appRole="['ROLE_ADMIN']"
                     class="fuse-horizontal-navigation-menu-item"
                     [item]="item"
                     [name]="name"></fuse-horizontal-navigation-branch-item>

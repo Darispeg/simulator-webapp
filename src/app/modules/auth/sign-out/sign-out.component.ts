@@ -18,9 +18,6 @@ export class AuthSignOutComponent implements OnInit, OnDestroy
     };
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-    /**
-     * Constructor
-     */
     constructor(
         private _authService: AuthService,
         private _router: Router
@@ -28,19 +25,10 @@ export class AuthSignOutComponent implements OnInit, OnDestroy
     {
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * On init
-     */
     ngOnInit(): void
     {
-        // Sign out
         this._authService.signOut();
 
-        // Redirect after the countdown
         timer(1000, 1000)
             .pipe(
                 finalize(() => {
@@ -53,12 +41,8 @@ export class AuthSignOutComponent implements OnInit, OnDestroy
             .subscribe();
     }
 
-    /**
-     * On destroy
-     */
     ngOnDestroy(): void
     {
-        // Unsubscribe from all subscriptions
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
     }

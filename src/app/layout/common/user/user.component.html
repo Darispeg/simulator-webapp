@@ -5,8 +5,7 @@
     <span class="relative">
         <img
             class="w-7 h-7 rounded-full"
-            *ngIf="showAvatar && user.avatar"
-            [src]="user.avatar">
+            [src]="'assets/images/avatars/avatar-user.png'">
         <mat-icon
             *ngIf="!showAvatar || !user.avatar"
             [svgIcon]="'heroicons_outline:user-circle'"></mat-icon>
@@ -26,18 +25,18 @@
     #userActions="matMenu">
     <button mat-menu-item>
         <span class="flex flex-col leading-none">
-            <span>Signed in as</span>
-            <span class="mt-1.5 text-md font-medium">{{user.email}}</span>
+            <span>Inicio de sesion como </span>
+            <span class="mt-1.5 text-md font-medium">{{user.name}}</span>
         </span>
     </button>
     <mat-divider class="my-2"></mat-divider>
     <button mat-menu-item>
         <mat-icon [svgIcon]="'heroicons_outline:user-circle'"></mat-icon>
-        <span>Profile</span>
+        <span>Perfil</span>
     </button>
     <button mat-menu-item>
         <mat-icon [svgIcon]="'heroicons_outline:cog'"></mat-icon>
-        <span>Settings</span>
+        <span>Ajustes</span>
     </button>
     <button
         mat-menu-item

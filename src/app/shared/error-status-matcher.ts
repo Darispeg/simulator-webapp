@@ -27,6 +27,10 @@ export class MyErrorStatusMatcher implements ErrorStateMatcher {
 
         if(catchError.errors.email)
             return `Dirección de correo incorrecta`;
+        
+        if(catchError.errors.max)
+            return `El numero que ingreso es superior al permitido`;
+
 
         return "Error desconocido";
     }

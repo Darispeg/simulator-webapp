@@ -9,11 +9,8 @@
         <!-- Navigation header hook -->
         <ng-container fuseVerticalNavigationContentHeader>
             <!-- Logo -->
-            <div class="flex items-center h-20 pt-6 px-8">
-                <img
-                    class="w-24"
-                    src="assets/images/logo/logo-text-on-dark.svg"
-                    alt="Logo image">
+            <div class="flex items-center justify-center h-32">
+                <img class="w-32" src="assets/images/logo/emi-2.png" alt="Logo image">
             </div>
         </ng-container>
     </fuse-vertical-navigation>
@@ -23,17 +20,16 @@
 <div class="flex flex-col flex-auto items-center w-full min-w-0 bg-gray-200 dark:bg-card">
 
     <!-- Header -->
-    <div class="relative flex flex-col flex-0 justify-center w-full h-16 sm:h-20 md:h-36 overflow-hidden z-49 shadow dark:shadow-none print:hidden">
+    <div class="relative flex flex-col flex-0 justify-center w-full h-16 sm:h-20 md:h-40 overflow-hidden z-49 shadow dark:shadow-none print:hidden">
         <!-- Top bar -->
-        <div class="relative dark flex flex-auto justify-center w-full px-4 md:px-8 bg-gray-800 dark:bg-gray-900">
+        <div class="relative dark flex flex-auto justify-center w-full px-4 md:px-8 bg-primary-900 dark:bg-gray-900">
             <div class="flex items-center w-full max-w-360 h-16 sm:h-20">
                 <!-- Logo -->
                 <ng-container *ngIf="!isScreenSmall">
                     <div class="flex items-center">
-                        <img
-                            class="w-24"
-                            src="assets/images/logo/logo-text-on-dark.svg"
-                            alt="Logo image">
+                        <div class="flex items-center justify-center h-32">
+                            <img class="w-36" src="assets/images/logo/emi-2.png" alt="Logo image">
+                        </div>
                     </div>
                 </ng-container>
                 <!-- Navigation toggle button -->
@@ -46,12 +42,8 @@
                 </ng-container>
                 <!-- Components -->
                 <div class="flex items-center pl-2 ml-auto space-x-1 sm:space-x-2">
-                    <!-- <languages></languages> -->
+                    <languages></languages>
                     <fuse-fullscreen class="hidden md:block"></fuse-fullscreen>
-                    <search [appearance]="'bar'"></search>
-                    <shortcuts></shortcuts>
-                    <messages></messages>
-                    <notifications></notifications>
                     <user></user>
                 </div>
             </div>

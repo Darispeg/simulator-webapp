@@ -18,6 +18,11 @@ import { mapsRoutes } from './maps.routing';
 import { MapsListComponent } from './list/list.component';
 import { MapsDetailsComponent } from './details/details.component';
 import { MapsComponent } from './maps.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatInputModule } from '@angular/material/input';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
     declarations : [
@@ -40,7 +45,11 @@ import { MapsComponent } from './maps.component';
         MatTabsModule,
         NgApexchartsModule,
         TranslocoModule,
-        SharedModule
+        SharedModule,
+        MatPaginatorModule,
+        MatCheckboxModule,
+        MatInputModule,
+        MatExpansionModule
     ]
 })
 export class MapsModule{}

@@ -12,7 +12,9 @@ import { mockApiServices } from 'app/mock-api';
 import { LayoutModule } from 'app/layout/layout.module';
 import { AppComponent } from 'app/app.component';
 import { appRoutes } from 'app/app.routing';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { AuthInterceptor } from './core/auth/auth.interceptor';
+import { RoleDirective } from './core/auth/directive/role.directive';
 
 
 const routerConfig: ExtraOptions = {
@@ -49,6 +51,11 @@ const routerConfig: ExtraOptions = {
     ],
     bootstrap   : [
         AppComponent
+    ],
+    providers: [
+        {
+            provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true
+        }
     ]
 })
 export class AppModule
